@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Natar</title>
+<style>
+:root{--bg:#f4f4f5;--fg:#111;--mut:#6b6b70;--card:rgba(0,0,0,.05);--bd:rgba(0,0,0,.14);--ok:#12a150;--bad:#e5484d;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#000;--fg:#f5f5f5;--mut:#8a8a8a;--card:rgba(255,255,255,.07);--bd:rgba(255,255,255,.15);--ok:#3ddc84;--bad:#ff5c5c}}
+:root[data-theme="dark"]{--bg:#000;--fg:#f5f5f5;--mut:#8a8a8a;--card:rgba(255,255,255,.07);--bd:rgba(255,255,255,.15);--ok:#3ddc84;--bad:#ff5c5c}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;min-height:100vh}
+#app{max-width:520px;margin:0 auto;padding:20px 16px 48px}
+h1{font-size:28px;margin:8px 0 4px;letter-spacing:-.5px}
+p.s{color:var(--mut);margin:0 0 18px;font-size:14px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:18px;padding:14px;margin-bottom:12px;backdrop-filter:blur(14px)}
+input{width:100%;background:transparent;color:var(--fg);border:1px solid var(--bd);border-radius:12px;padding:12px;font-size:16px;margin-bottom:10px;outline:none}
+input:focus{border-color:var(--fg)}
+button{font:inherit;cursor:pointer;border:1px solid var(--bd);background:var(--fg);color:var(--bg);border-radius:12px;padding:12px 16px;font-weight:600}
+button.g{background:transparent;color:var(--fg)}
+button.w{width:100%}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.mut{color:var(--mut);font-size:13px}
+.item{cursor:pointer}
+.bar{height:6px;border-radius:6px;background:var(--bd);overflow:hidden;margin-top:10px}
+.bar i{display:block;height:100%;background:var(--fg)}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.d{padding:12px 0;text-align:center;border-radius:12px;border:1px solid var(--bd);background:var(--card);color:var(--fg);font-weight:600}
+.d.p{background:var(--ok);color:#000;border-color:transparent}
+.d.n{background:var(--bad);color:#000;border-color:transparent}
+.d.l{opacity:.35}
+.chk{display:flex;gap:12px;align-items:center;padding:11px 4px;border-bottom:1px solid var(--bd);cursor:pointer}
+.chk input{width:20px;height:20px;margin:0;flex:none}
+.big{font-size:44px;font-weight:800;text-align:center;margin:6px 0}
+.v{text-align:center;font-weight:700;margin-bottom:12px}
+.pos{color:var(--ok)}.neg{color:var(--bad)}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+const QQ={id:["Tidak membuka konten dewasa","Ibadah tepat waktu","Olahraga / gerak badan","Tidur cukup (6+ jam)","Bangun pagi","Minum air cukup","Makan teratur","Belajar / ngoding / berkarya","Ngobrol dengan teman atau keluarga","Keluar kamar / rumah","Layar HP dibatasi","Tidak menyendiri lama di kamar","Bisa menahan godaan","Menulis jurnal / refleksi","Bersyukur hari ini","Merapikan kamar / tempat tidur","Mandi & rapi","Sarapan sehat","Jalan kaki / lari","Meditasi / tarik napas 5 menit","Baca buku / artikel","Belajar skill baru","Bantu pekerjaan rumah","Chat / telepon teman","Duduk di teras / depan rumah","Keluar beli sesuatu","Ikut komunitas / grup online","Tidak begadang","Tidak scroll sosmed berlebihan","Tidak main game berlebihan","Mengerjakan proyek (ngoding / desain)","Bikin rencana besok","Tidak membandingkan diri dengan orang lain","Memaafkan diri sendiri","Merawat diri (mandi, skincare, potong kuku)","HP dijauhkan saat mau tidur","Hapus / blokir pemicu","Cerita ke orang yang dipercaya","Kena sinar matahari","Berani coba satu hal kecil yang bikin takut"],
+en:["No adult content","On-time prayer / worship","Exercise / physical activity","Enough sleep (6+ hrs)","Woke up early","Drank enough water","Ate regularly","Learned / coded / created","Talked with friends or family","Left the room / house","Limited screen time","Didn't isolate in my room","Resisted temptation","Wrote a journal / reflection","Felt grateful today","Tidied my room / bed","Showered & got ready","Healthy breakfast","Walked / ran","Meditated / 5 min breathing","Read a book / article","Learned a new skill","Helped with chores","Chatted / called a friend","Sat on the porch / outside","Went out to buy something","Joined a community / online group","No late night","No excessive social media","No excessive gaming","Worked on a project (coding / design)","Planned tomorrow","Didn't compare myself to others","Forgave myself","Self-care (shower, skincare, nails)","Phone away at bedtime","Deleted / blocked a trigger","Talked to someone I trust","Got some sunlight","Tried one small thing that scares me"]};
+const TT={id:{sub:"Catat streak, isi laporan harian, jaga konsisten.",p1:"Judul streak (contoh: Natar)",p2:"Berapa hari mau jaga diri?",mk:"Buat Streak",al:"Isi jumlah hari 1 - 365",cf:"Hapus streak ini beserta semua laporannya?",em:"Belum ada streak.",dl:"Hapus",day:"Hari",st:"Streak",pos:"positif",neg:"negatif",fin:"Selesai",bk:"← Kembali",rp:"Laporan",hint:"Centang yang berhasil kamu lakukan hari ini.",sv:"Simpan Laporan",vp:"POSITIF",vn:"NEGATIF",d:"hari",cu:"Tambah laporan sendiri",cn:"Ketik hal yang kamu lakukan hari ini. Otomatis ditebak positif/negatif, bisa kamu balik. Positif +1 poin, negatif −1 poin. 9 dari 15 poin = 60%.",ph3:"Contoh: lari pagi / nonton video 18+",ad:"Tambah",pp:"Positif",nn:"Negatif",pts:"Poin"},
+en:{sub:"Track your streak, fill in daily reports, stay consistent.",p1:"Streak title (e.g. Natar)",p2:"How many days will you hold on?",mk:"Create Streak",al:"Enter a number of days between 1 and 365",cf:"Delete this streak and all its reports?",em:"No streaks yet.",dl:"Delete",day:"Day",st:"Streak",pos:"positive",neg:"negative",fin:"Finished",bk:"← Back",rp:"Report",hint:"Check everything you accomplished today.",sv:"Save Report",vp:"POSITIVE",vn:"NEGATIVE",d:"days",cu:"Add your own entry",cn:"Type something you did today. It is auto-guessed as positive/negative and you can flip it. Positive +1 point, negative −1 point. 9 of 15 points = 60%.",ph3:"e.g. morning run / watched 18+ videos",ad:"Add",pp:"Positive",nn:"Negative",pts:"Points"}};
+let L='en';try{L=localStorage.getItem('natar_l')||((navigator.language||'').startsWith('id')?'id':'en')}catch(e){}
+const t=k=>TT[L][k],Q=new Array(15).fill(0);
+const setL=l=>{L=l;try{localStorage.setItem('natar_l',l)}catch(e){}render()};
+const lb=()=>`<div class="row" style="justify-content:flex-end;gap:6px;margin-bottom:6px"><button class="g" style="padding:6px 12px;${L==='id'?'':'opacity:.4'}" onclick="setL('id')">ID</button><button class="g" style="padding:6px 12px;${L==='en'?'':'opacity:.4'}" onclick="setL('en')">EN</button></div>`;
+let S=[],cur=null,day=null,tmp=[];
+try{S=JSON.parse(localStorage.getItem('natar')||'[]')}catch(e){}
+S.forEach(x=>{for(const d in x.r){if(Array.isArray(x.r[d]))x.r[d]={p:x.r[d],c:[]}}});
+const save=()=>{try{localStorage.setItem('natar',JSON.stringify(S))}catch(e){}};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const today=()=>{const d=new Date();return new Date(d.getFullYear(),d.getMonth(),d.getDate()).getTime()};
+const dayNow=s=>Math.floor((today()-s.start)/864e5)+1;
+const pt=r=>({P:(r.p||[]).filter(Boolean).length+(r.c||[]).filter(x=>x.y==='p').length,N:(r.c||[]).filter(x=>x.y==='n').length});
+const pct=r=>{const{P,N}=pt(r);return Math.max(0,Math.min(100,Math.round((P-N)/15*100)))};
+const BAD=/porn|bokep|18\+|\bxxx\b|coli\b|masturb|nonton|rokok|vape|smok|begadang|malas|males|marah|bohong|judi|gambl|scroll|mabar|bolos|skip|lazy|angry|\blie\b|lied|procrastin|binge|stayed up|late night|overeat|ngemil/i;
+let cty='p';
+const sc=(s,d)=>s.r[d]?pct(s.r[d]):null;
+const streak=s=>{let c=0;for(let d=1;d<=s.days;d++){const p=sc(s,d);if(p===null)continue;c=p>=60?c+1:0}return c};
+const cnt=s=>{let p=0,n=0;for(let d=1;d<=s.days;d++){const v=sc(s,d);if(v===null)continue;v>=60?p++:n++}return{p,n}};
+
+function add(){
+  const ti=document.getElementById('t').value.trim()||'Natar';
+  const n=parseInt(document.getElementById('n').value,10);
+  if(!n||n<1||n>365){alert(t('al'));return}
+  S.unshift({id:Date.now(),title:ti,days:n,start:today(),r:{}});
+  save();render();
+}
+function del(id,e){
+  e.stopPropagation();
+  if(confirm(t('cf'))){S=S.filter(s=>s.id!==id);save();render()}
+}
+function open_(id){cur=S.find(s=>s.id===id);day=null;render()}
+function openDay(d){
+  if(d>dayNow(cur))return;
+  day=d;tmp=cur.r[d]?JSON.parse(JSON.stringify(cur.r[d])):{p:[],c:[]};cty='p';render();
+}
+function tog(i){tmp.p[i]=!tmp.p[i];upd()}
+function upd(){
+  const{P,N}=pt(tmp),p=pct(tmp);
+  document.getElementById('pc').textContent=p+'%';
+  document.getElementById('pt').textContent=t('pts')+' '+Math.max(0,P-N)+' / 15';
+  const v=document.getElementById('vd');v.textContent=p>=60?t('vp'):t('vn');v.className='v '+(p>=60?'pos':'neg');
+}
+function cy_(){const e=document.getElementById('cy');e.textContent=cty==='p'?'+ '+t('pp'):'− '+t('nn');e.style.color=cty==='p'?'var(--ok)':'var(--bad)'}
+function gs(v){cty=BAD.test(v)?'n':'p';cy_()}
+function flip(){cty=cty==='p'?'n':'p';cy_()}
+function addC(){const v=document.getElementById('ci').value.trim();if(!v)return;tmp.c.push({t:v,y:cty});cty='p';render()}
+function rmC(i){tmp.c.splice(i,1);render()}
+function saveDay(){cur.r[day]=tmp;save();day=null;render()}
+function back(){if(day!==null)day=null;else cur=null;render()}
+
+function render(){
+  const a=document.getElementById('app');document.documentElement.lang=L;
+  if(!cur){
+    a.innerHTML=lb()+`<h1>Natar</h1><p class="s">${t('sub')}</p>
+    <div class="card"><input id="t" placeholder="${t('p1')}" maxlength="40">
+    <input id="n" type="number" inputmode="numeric" placeholder="${t('p2')}" min="1" max="365">
+    <button class="w" onclick="add()">${t('mk')}</button></div>`+
+    (S.length?S.map(s=>{const c=cnt(s),now=Math.min(dayNow(s),s.days);return`<div class="card item" onclick="open_(${s.id})">
+      <div class="row"><b>${esc(s.title)}</b><button class="g" onclick="del(${s.id},event)">${t('dl')}</button></div>
+      <div class="mut">${t('day')} ${Math.max(now,1)} / ${s.days} · ${t('st')} ${streak(s)} · <span class="pos">+${c.p}</span> <span class="neg">-${c.n}</span></div>
+      <div class="bar"><i style="width:${Math.min(100,Math.max(now,1)/s.days*100)}%"></i></div></div>`}).join(''):`<p class="mut" style="text-align:center">${t('em')}</p>`);
+    return;
+  }
+  if(day===null){
+    const c=cnt(cur),now=dayNow(cur);let g='';
+    for(let d=1;d<=cur.days;d++){const v=sc(cur,d);const k=v===null?(d>now?'l':''):(v>=60?'p':'n');g+=`<button class="d ${k}" onclick="openDay(${d})">${d}</button>`}
+    a.innerHTML=lb()+`<button class="g" onclick="back()">${t('bk')}</button>
+    <h1>${esc(cur.title)}</h1>
+    <p class="s">${t('st')} ${streak(cur)} ${t('d')} · <span class="pos">${c.p} ${t('pos')}</span> · <span class="neg">${c.n} ${t('neg')}</span>${now>cur.days?' · '+t('fin'):''}</p>
+    <div class="grid">${g}</div>`;
+    return;
+  }
+  const y=window.scrollY;
+  a.innerHTML=lb()+`<button class="g" onclick="back()">${t('bk')}</button>
+  <h1>${t('day')} ${day} · ${t('rp')}</h1><p class="s">${t('hint')}</p>
+  <div class="card"><div class="big" id="pc"></div><div class="v" id="vd"></div><div class="mut" id="pt" style="text-align:center"></div></div>
+  <div class="card">${QQ[L].map((q,i)=>`<label class="chk"><input type="checkbox" ${tmp.p[i]?'checked':''} onchange="tog(${i})"><span>${esc(q)}</span></label>`).join('')}</div>
+  <div class="card"><b>${t('cu')}</b><p class="mut">${t('cn')}</p>
+  <input id="ci" placeholder="${t('ph3')}" maxlength="60" oninput="gs(this.value)">
+  <div class="row" style="margin-bottom:10px"><button id="cy" class="g" onclick="flip()"></button><button onclick="addC()">${t('ad')}</button></div>
+  ${tmp.c.map((x,i)=>`<div class="row chk" style="cursor:default"><span class="${x.y==='p'?'pos':'neg'}">${x.y==='p'?'+1':'−1'} · ${esc(x.t)}</span><button class="g" style="padding:4px 10px" onclick="rmC(${i})">×</button></div>`).join('')}</div>
+  <button class="w" onclick="saveDay()">${t('sv')}</button>`;
+  cy_();upd();window.scrollTo(0,y);
+}
+render();
+</script>
+</body>
+</html>
